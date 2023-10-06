@@ -20,7 +20,7 @@ db.once('open', async () => {
     username: 'dangwang',
     email: 'danfeng@testmail.com',
     password: 'password12345',
-    company: companies[0]._id,
+    company: companies[0].name,
   });
 
   await User.create({
@@ -29,7 +29,7 @@ db.once('open', async () => {
     username: 'roddy',
     email: 'rodolfo@testmail.com',
     password: 'password12345',
-    company: companies[0]._id,
+    company: companies[0].name,
   });
 
   await User.create({
@@ -38,7 +38,16 @@ db.once('open', async () => {
     username: 'coldest',
     email: 'rodolfo@testmail.com',
     password: 'password12345',
-    company: companies[0]._id,
+    company: companies[1].name,
+  });
+
+  await User.create({
+    firstName: 'Eric',
+    lastName: 'Beverly',
+    username: 'esbev',
+    email: 'ericb@testmail.com',
+    password: 'password12345',
+    company: companies[1].name,
   });
 
   console.log('users seeded');
