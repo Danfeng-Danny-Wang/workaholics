@@ -1,5 +1,5 @@
-const { User } = require('../models');
-const { Company } = require('../models');
+const { User } = require('../model');
+const { Company } = require('../model');
 const { signToken } = require('../utils/auth');
 
 module.exports = {
