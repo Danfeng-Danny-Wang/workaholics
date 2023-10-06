@@ -1,16 +1,5 @@
-import React, { useState } from 'react';
-import { SignUpForm, Login } from '../components';
-import auth from '../utils/auth';
-
-const Home = () => {
-  
-
-
-  return (
-    <>
-    
-    </>
-  );
-};
+function Home() {
+  return <h1>Home Page!!</h1>;
+}
 
 export default Home;
