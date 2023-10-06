@@ -7,9 +7,9 @@ db.once('open', async () => {
   await cleanDB('Company', 'companies');
 
   const companies = await Company.insertMany([
-    { name: 'Company1', code: 'joker' },
-    { name: 'Compnay2', code: 'batman' },
-    { name: 'Company3', code: 'riddler' },
+    { name: 'Company1', code: 'joker', chatRooms: [Room1, Room2, Room3] },
+    { name: 'Compnay2', code: 'batman', chatRooms: [Room1, Room2, Room3] },
+    { name: 'Company3', code: 'riddler', chatRooms: [Room1, Room2, Room3] },
   ]);
 
   console.log('companies seeded');
@@ -36,7 +36,7 @@ db.once('open', async () => {
     firstName: 'Alex',
     lastName: 'Colwell',
     username: 'coldest',
-    email: 'rodolfo@testmail.com',
+    email: 'allcold@testmail.com',
     password: 'password12345',
     company: companies[1].name,
   });

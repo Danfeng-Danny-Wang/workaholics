@@ -13,6 +13,7 @@ const companySchema = new Schema({
     required: true,
     trim: true,
   },
+  chatrooms: [String],
   
 });
 
