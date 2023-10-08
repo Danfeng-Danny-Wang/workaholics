@@ -1,4 +1,4 @@
-const { signToken } = require('../../server/utils/auth');
+const { signToken } = require('../utils/auth');
 const { User, Company } = require('../models');
 
 const resolvers = {
