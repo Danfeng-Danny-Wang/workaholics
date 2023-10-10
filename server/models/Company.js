@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Room = require('./Room');
 
 const { Schema } = mongoose;
 
@@ -11,11 +12,15 @@ const companySchema = new Schema({
   code: {
     type: String,
     required: true,
-    trim: true,
   },
-  chatrooms: [String],
+  chatRooms: [Room.schema]
   
 });
+
+// this may not work properly
+companySchema.methods.isCorrectPassword = async function(code) {
+  return await compare(code, this.code);
+};
 
 const Company = mongoose.model('Company', companySchema);
 

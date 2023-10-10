@@ -17,7 +17,7 @@ db.once('open', async () => {
   await User.create({
     firstName: 'Danfeng',
     lastName: 'Wang',
-    username: 'dangwang',
+    username: 'danny',
     email: 'danfeng@testmail.com',
     password: 'password12345',
     company: companies[0].name,
@@ -26,7 +26,7 @@ db.once('open', async () => {
   await User.create({
     firstName: 'Rodolfo',
     lastName: 'Silva',
-    username: 'roddy',
+    username: 'morgan',
     email: 'rodolfo@testmail.com',
     password: 'password12345',
     company: companies[0].name,
@@ -35,7 +35,7 @@ db.once('open', async () => {
   await User.create({
     firstName: 'Alex',
     lastName: 'Colwell',
-    username: 'coldest',
+    username: 'alex',
     email: 'allcold@testmail.com',
     password: 'password12345',
     company: companies[1].name,

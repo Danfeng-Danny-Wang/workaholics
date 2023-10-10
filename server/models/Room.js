@@ -8,6 +8,7 @@ const roomSchema = new Schema({
     required: true,
     trim: true,
   },
+  messages: [String]
   
 });
 
