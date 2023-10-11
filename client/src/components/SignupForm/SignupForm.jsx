@@ -1,4 +1,5 @@
 import {
+  Button,
   Divider,
   FormControl,
   InputLabel,
@@ -8,11 +9,57 @@ import {
 } from "@mui/material";
 import Select from "@mui/material/Select";
 import { Box } from "@mui/system";
-
 import LinkButton from "../LinkButton/LinkButton";
+import { useState } from "react";
+// import { useMutation } from '@apollo/client';
+// import Auth from '../utils/auth';
+// import { ADD_USER } from "../../utils/mutations";
+// import { GET_COMPANIES } from '../../utils/queries';
 
 function SignupForm() {
-  function handleFormSubmit() {}
+  // const [addUser] = useMutation(ADD_USER);
+  const [formState, setFormState] = useState(
+    {
+      firstName: '',
+      lastName: '',
+      username: '',
+      email: '',
+      password: '',
+      companyCode: ''
+    }
+  );
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    console.log(formState);
+    // TODO: check company code for verification const userCompany = await getCompany()
+    // set up a separate function or helper to verify company code
+    // if (companyCode !== userCompany.code) {
+    //  throw error
+    // }
+
+    // TODO: add user
+    // const response = await ADD_USER({
+    //   variables: {
+    //     firstName: formState.firstName,
+    //     lastName: formState.lastName,
+    //     username: formState.username,
+    //     email: formState.email,
+    //     password: formState.password,
+    //     // TODO: place chosen company variable here
+    //   },
+    // });
+    // const token = response.data.addUser.token;
+    // Auth.login(token);
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
 
   return (
     <form onSubmit={handleFormSubmit}>
@@ -29,21 +76,19 @@ function SignupForm() {
         <Typography variant="h5" marginBottom={1}>
           Sign Up
         </Typography>
-
+{/* TODO: get the company option functoining to add company variable to adduser */}
         <FormControl fullWidth>
-          <InputLabel id="company-options">Company</InputLabel>
+          <InputLabel id="company-options">Select Company</InputLabel>
           <Select
-            labelId="companies-options-label"
-            id="companies-option"
-            // value={company}
-            label="Company"
+            labelId="company-options-label"
+            id="company-option"
+            name='company'
+            label="Select Company"
             size="medium"
             variant="outlined"
             // onChange={handleChange}
           >
-            <MenuItem value="">
-              <em>None</em>
-            </MenuItem>
+            {/* TODO: get companies from DB and map them out here */}
             <MenuItem value={"Company 1"}>Company 1</MenuItem>
             <MenuItem value={"Company 2"}>Company 2</MenuItem>
             <MenuItem value={"Company 3"}>Company 3</MenuItem>
@@ -57,6 +102,7 @@ function SignupForm() {
             type="text"
             label="Company Code"
             variant="outlined"
+            onChange={handleChange}
           />
         </FormControl>
 
@@ -70,6 +116,7 @@ function SignupForm() {
             type="text"
             label="First Name"
             variant="outlined"
+            onChange={handleChange}
           />
         </FormControl>
 
@@ -81,6 +128,7 @@ function SignupForm() {
             type="text"
             label="Last Name"
             variant="outlined"
+            onChange={handleChange}
           />
         </FormControl>
 
@@ -92,6 +140,7 @@ function SignupForm() {
             type="text"
             label="Username"
             variant="outlined"
+            onChange={handleChange}
           />
         </FormControl>
 
@@ -103,6 +152,7 @@ function SignupForm() {
             type="email"
             label="Email"
             variant="outlined"
+            onChange={handleChange}
           />
         </FormControl>
 
@@ -114,18 +164,19 @@ function SignupForm() {
             type="password"
             label="Password"
             variant="outlined"
+            onChange={handleChange}
           />
         </FormControl>
 
-        <LinkButton
-          url="/Lobby"
+        <Button
+          // url="/Lobby"
           sx={{ marginTop: 1, borderRadius: 2 }}
           variant="contained"
           color="warning"
           type="submit"
         >
           Signup
-        </LinkButton>
+        </Button>
 
         <LinkButton
           url="/"
