@@ -14,7 +14,7 @@ import {
 import { Box } from "@mui/system";
 import { Fragment, useState } from "react";
 import { Link } from "react-router-dom";
-import { chatMessageDto } from "../../model/ChatMessageDto";
+import { chatMessageDto } from "../model/ChatMessageDto";
 import "./ChatBox.css";
 import SendIcon from "@mui/icons-material/Send";
 
