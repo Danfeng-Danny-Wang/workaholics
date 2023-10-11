@@ -3,7 +3,28 @@ const { Company } = require('../model');
 const { signToken } = require('../utils/auth');
 
 module.exports = {
-// TODO: get a single user by either email or their username
+
+  async createUser({ body }, res) {
+    const foundCompany = await Company.findOne({ body });
+    const correctCode = await user.isCorrectPassword(body.companyCode);
+
+    if (!correctCode) {
+      return res.status(400).json({ message: 'Wrong company code!' });
+    }
+
+    if (foundCompany.code === body.companyCode) {
+
+      const user = await User.create(body);
+
+      if (!user) {
+        return res.status(400).json({ message: 'Something is wrong!' });
+      }
+      const token = signToken(user);
+      res.json({ token, user });
+
+    }
+  },
+
   async getSingleUser({ user = null, params }, res) {
     const foundUser = await User.findOne({
       $or: [{ email: user ? user.email : params.email }, { username: params.username }],
@@ -14,19 +35,6 @@ module.exports = {
     }
 
     res.json(foundUser);
-  },
-
-  async createUser({ body }, res) {
-// TODO: create user will need to choose a company and input the company code for verification
-// wrap all this in a try catch or if statement to verify the company code
-    const user = await User.create(body);
-
-    if (!user) {
-      return res.status(400).json({ message: 'Something is wrong!' });
-    }
-    const token = signToken(user);
-    res.json({ token, user });
-
   },
 
   async login({ body }, res) {
