@@ -7,8 +7,9 @@ import {
 import { setContext } from "@apollo/client/link/context";
 import { Outlet } from "react-router-dom";
 import "./App.css";
-import Header from "./components/Header/Header";
-import { createTheme, ThemeProvider } from "@mui/material/styles";
+import Header from './components/Header/Header'
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { CssBaseline } from "@mui/material";
 
 const darkTheme = createTheme({ palette: { mode: "dark" } });
 // const lightTheme = createTheme({ palette: { mode: 'light' } });
@@ -35,11 +36,12 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <ThemeProvider theme={darkTheme}>
-        <Header />
-        <main>
-          <Outlet />
-        </main>
+      <ThemeProvider theme={darkTheme}> 
+      <CssBaseline />
+      <Header />
+      <main>
+        <Outlet />
+      </main>
       </ThemeProvider>
     </ApolloProvider>
   );
