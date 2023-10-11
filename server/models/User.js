@@ -1,7 +1,7 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
-const companySchema = require('./Company');
+const Company = require('./Company');
 
 const userSchema = new Schema(
   {
@@ -30,9 +30,7 @@ const userSchema = new Schema(
       required: true,
       minlength: 5,
     },
-    company: {
-      companySchema
-    },
+    company: Company.schema
   },
   {
     toJSON: {
