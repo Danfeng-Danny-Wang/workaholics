@@ -9,11 +9,10 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import SendIcon from "@mui/icons-material/Send";
-
 import { useState } from "react";
-
 import { chatMessageDto } from "../../model/ChatMessageDto";
 import ChatWindowHeader from "./ChatWindowHeader";
+
 
 function ChatWindow() {
   const [chatMessages, setChatMessages] = useState([]);

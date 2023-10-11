@@ -1,9 +1,40 @@
-import { Box, Typography, FormControl, TextField } from "@mui/material";
-
+import { Box, Typography, FormControl, TextField, Button } from "@mui/material";
 import LinkButton from "../LinkButton/LinkButton";
+import { useState } from "react";
+// import { useMutation } from '@apollo/client';
+// import Auth from '../utils/auth';
+// import { LOGIN_USER } from '../../utils/mutations';
 
 function LoginForm() {
-  function handleFormSubmit() {}
+  // const [login, { error }] = useMutation(LOGIN);
+  const [formState, setFormState] = useState(
+    {
+      username: '',
+      password: '',
+    }
+  );
+
+  const handleFormSubmit = async (event) => {
+    event.preventDefault();
+    console.log(formState);
+    // try {
+    //   const response = await login({
+    //     variables: { email: formState.email, password: formState.password },
+    //   });
+    //   const token = response.data.login.token;
+    //   Auth.login(token);
+    // } catch (err) {
+    //   console.log(err);
+    // }
+  };
+
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormState({
+      ...formState,
+      [name]: value,
+    });
+  };
 
   return (
     <form onSubmit={handleFormSubmit}>
@@ -26,6 +57,7 @@ function LoginForm() {
             type="text"
             label="Username"
             variant="outlined"
+            onChange={handleChange}
           />
         </FormControl>
 
@@ -36,18 +68,19 @@ function LoginForm() {
             type="password"
             label="Password"
             variant="outlined"
+            onChange={handleChange}
           />
         </FormControl>
 
-        <LinkButton
-          url="/Lobby"
+        <Button
+          // url="/Lobby"
           sx={{ marginTop: 2, borderRadius: 2 }}
           variant="contained"
           color="warning"
           type="submit"
         >
           Login
-        </LinkButton>
+        </Button>
 
         <LinkButton
           url="/Signup"
