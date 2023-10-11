@@ -1,16 +1,17 @@
-import ReactDOM from 'react-dom/client';
+import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 
-import App from './App.jsx';
-import Error from './components/Error/Error.jsx';
-import Login from './components/Login/Login.jsx';
-import Signup from './components/Signup/Signup.jsx';
-import Lobby from './components/Lobby/Lobby.jsx'
-import ChatBox from './components/ChatBox/ChatBox.jsx'
+import App from "./App.jsx";
+
+import Error from "./pages/Error.jsx";
+import Login from "./pages/Login.jsx";
+import Signup from "./pages/Signup.jsx";
+import Lobby from "./pages/Lobby.jsx";
+import ChatBox from "./pages/ChatBox.jsx";
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <App />,
     errorElement: <Error />,
     children: [
@@ -19,18 +20,17 @@ const router = createBrowserRouter([
         element: <Login />,
       },
       {
-        path: '/Signup',
+        path: "/Signup",
         element: <Signup />,
       },
       {
-        path: '/Lobby',
+        path: "/Lobby",
         element: <Lobby />,
       },
       {
-        path: '/ChatBox',
+        path: "/ChatBox",
         element: <ChatBox />,
       },
-      
     ],
   },
 ]);
