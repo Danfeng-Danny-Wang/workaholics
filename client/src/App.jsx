@@ -11,7 +11,7 @@ import Header from './components/Header/Header'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CssBaseline } from "@mui/material";
 
-const darkTheme = createTheme({ palette: { mode: 'dark' } });
+const darkTheme = createTheme({ palette: { mode: "dark" } });
 // const lightTheme = createTheme({ palette: { mode: 'light' } });
 
 const httpLink = createHttpLink({
