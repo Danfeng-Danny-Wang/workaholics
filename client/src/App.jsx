@@ -9,6 +9,7 @@ import { Outlet } from "react-router-dom";
 import "./App.css";
 import Header from './components/Header/Header'
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { CssBaseline } from "@mui/material";
 
 const darkTheme = createTheme({ palette: { mode: 'dark' } });
 // const lightTheme = createTheme({ palette: { mode: 'light' } });
@@ -36,6 +37,7 @@ function App() {
   return (
     <ApolloProvider client={client}>
       <ThemeProvider theme={darkTheme}> 
+      <CssBaseline />
       <Header />
       <main>
         <Outlet />
