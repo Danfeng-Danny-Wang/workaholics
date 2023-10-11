@@ -1,7 +1,8 @@
-import { Button, Container, Paper, Typography } from "@mui/material";
+import { Container, Paper, Typography } from "@mui/material";
 import { Box } from "@mui/system";
 import { Fragment } from "react";
-import { Link } from "react-router-dom";
+
+import ChatroomList from "../components/ChatroomList/ChatroomList";
 
 export default function Lobby() {
   return (
@@ -22,61 +23,7 @@ export default function Lobby() {
               Company Lobby
             </Typography>
 
-            <Link to="/ChatBox">
-              <Button
-                style={{
-                  backgroundColor: "#5C76B7",
-                  padding: "10px 100px",
-                  fontSize: "18px",
-                }}
-                sx={{ marginBottom: 1, marginTop: 1 }}
-                variant="contained"
-              >
-                Room 1
-              </Button>
-            </Link>
-
-            <Link to="/ChatBox">
-              <Button
-                style={{
-                  backgroundColor: "#5DBA40",
-                  padding: "10px 100px",
-                  fontSize: "18px",
-                }}
-                sx={{ marginBottom: 1, marginTop: 1 }}
-                variant="contained"
-              >
-                Room 1
-              </Button>
-            </Link>
-
-            <Link to="/ChatBox">
-              <Button
-                style={{
-                  backgroundColor: "#ffea00",
-                  padding: "10px 100px",
-                  fontSize: "18px",
-                }}
-                sx={{ marginBottom: 1, marginTop: 1 }}
-                variant="contained"
-              >
-                Room 1
-              </Button>
-            </Link>
-
-            <Link to="/ChatBox">
-              <Button
-                style={{
-                  backgroundColor: "#e53935",
-                  padding: "10px 100px",
-                  fontSize: "18px",
-                }}
-                sx={{ marginBottom: 1, marginTop: 1 }}
-                variant="contained"
-              >
-                Room 1
-              </Button>
-            </Link>
+            <ChatroomList />
           </Box>
         </Paper>
       </Container>
