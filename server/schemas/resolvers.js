@@ -49,23 +49,44 @@ const resolvers = {
       return { token, user };
     },
 
-    getCompany: async (parent, { name, code }) => {
+    verifyCompanyCode: async (parent, { name, code }) => {
       const company = await Company.findOne({ name });
-      const companyCode = await company.isCorrectPassword(code);
+      const correctCode = await company.isCorrectPassword(code);
 
-      if (!companyCode) {
+      if (!correctCode) {
         throw new Error('Company and code do not match'); 
       }
       
       return company;
     },
 
-  // TODO: will need to add the message to the room.message
-    addMessage: async (parent, { username, text, timeStamp }) => {
-      const message = await Message.create({ username, text, timeStamp });
+    addMessage: async (parent, { roomName, username, text, timeStamp }, context) => {
+      const newMessage = await Message.create({ username, text, timeStamp });
+      if (context.user) {
+        return Room.findOneAndUpdate(
+          { name: roomName },
+          {
+            $addToSet: { messages: newMessage },
+          },
+          {
+            new: true,
+            runValidators: true,
+          }
+        );
+      }
 
-      return message;
-    }
+      throw AuthenticationError('You must be logged in!')
+    },
+
+    getMessages: async (parent, { roomId }, context) => {
+      if (context.user) {
+        const room = await Room.findOne({ _id: roomId });
+        const messages = room.messages;
+        return messages;
+      }
+
+      throw AuthenticationError('You must be logged in!')
+    },
   },
 };
 
