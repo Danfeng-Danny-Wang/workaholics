@@ -1,13 +1,26 @@
 const { signToken, AuthenticationError } = require('../utils/auth');
-const { User, Company } = require('../models');
+const { User, Company, Room, Message } = require('../models');
 
 const resolvers = {
   Query: {
-    me: async (parent, args, context) => {
+    user: async (parent, args, context) => {
       if (context.user) {
         return User.findOne({ _id: context.user._id });
       }
       throw AuthenticationError('You need to be logged in!');
+    },
+
+  //TODO: add these to get the stuff we need
+    company: async (parent, args, context) => {
+      return await Company.find();
+    },
+
+    room: async (parent, args, context) => {
+
+    },
+
+    message: async (parent, args, context) => {
+
     },
   },
 
@@ -35,6 +48,24 @@ const resolvers = {
 
       return { token, user };
     },
+
+    getCompany: async (parent, { name, code }) => {
+      const company = await Company.findOne({ name });
+      const companyCode = await company.isCorrectPassword(code);
+
+      if (!companyCode) {
+        throw new Error('Company and code do not match'); 
+      }
+      
+      return company;
+    },
+
+  // TODO: will need to add the message to the room.message
+    addMessage: async (parent, { username, text, timeStamp }) => {
+      const message = await Message.create({ username, text, timeStamp });
+
+      return message;
+    }
   },
 };
 

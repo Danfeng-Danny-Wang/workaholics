@@ -14,7 +14,6 @@ const companySchema = new Schema({
     required: true,
   },
   chatRooms: [Room.schema]
-  
 });
 
 // this may not work properly

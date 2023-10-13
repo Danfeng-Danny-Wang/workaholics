@@ -1,15 +1,39 @@
 const db = require('./connection');
-const { User, Company } = require('../models');
+const { User, Company, Room } = require('../models');
 const cleanDB = require('./cleanDB');
 
 db.once('open', async () => {
   await cleanDB('User', 'users');
   await cleanDB('Company', 'companies');
+  await cleanDB('Room', 'rooms');
+
+  const rooms = await Room.insertMany([
+    { name: 'Room1' },
+    { name: 'Room2' },
+    { name: 'Room3' },
+    { name: 'Room4' },
+    { name: 'Room5' },
+    { name: 'Room6' },
+    { name: 'Room7' },
+    { name: 'Room8' },
+    { name: 'Room9' },
+  ]);
+
+  console.log('rooms seeded');
 
   const companies = await Company.insertMany([
-    { name: 'Company1', code: 'joker', chatRooms: [Room1, Room2, Room3] },
-    { name: 'Compnay2', code: 'batman', chatRooms: [Room1, Room2, Room3] },
-    { name: 'Company3', code: 'riddler', chatRooms: [Room1, Room2, Room3] },
+    { name: 'Company1', 
+      code: 'joker', 
+      chatRooms: [rooms[0]._id, rooms[1]._id, rooms[2]._id] 
+    },
+    { name: 'Compnay2', 
+      code: 'batman', 
+      chatRooms: [rooms[3]._id, rooms[4]._id, rooms[5]._id] 
+    },
+    { name: 'Company3', 
+      code: 'riddler', 
+      chatRooms: [rooms[6]._id, rooms[7]._id, rooms[8]._id] 
+    },
   ]);
 
   console.log('companies seeded');
