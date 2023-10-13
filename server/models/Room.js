@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Message = require('./Message');
 
 const { Schema } = mongoose;
 
@@ -8,7 +9,7 @@ const roomSchema = new Schema({
     required: true,
     trim: true,
   },
-  messages: [String]
+  messages: [Message.schema]
   
 });
 
