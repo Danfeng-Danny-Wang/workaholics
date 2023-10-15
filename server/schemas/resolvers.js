@@ -10,32 +10,33 @@ const resolvers = {
       throw AuthenticationError('You need to be logged in!');
     },
 
-  //TODO: add these to get the stuff we need
-    company: async (parent, args, context) => {
+    companies: async (parent, args ) => {
       return await Company.find();
     },
 
-    room: async (parent, args, context) => {
-
+    rooms: async (parent, args, context) => {
+      if (context.user) {
+        const company = await Company.findOne({ name: context.user.company });
+        const rooms = company.chatRooms;
+        return rooms;
+      }
+      throw AuthenticationError('You need to be logged in!');
     },
 
-    message: async (parent, args, context) => {
-
-    },
   },
 
   Mutation: {
-    loginUser: async (parent, { email, password }) => {
-      const user = await User.findOne({ email });
+    loginUser: async (parent, { username, password }) => {
+      const user = await User.findOne({ username });
 
       if (!user) {
-        throw AuthenticationError;
+        throw AuthenticationError('Username or password is incorrect');
       }
 
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
-        throw AuthenticationError;
+        throw AuthenticationError('Username or password is incorrect');
       }
 
       const token = signToken(user);
@@ -60,18 +61,13 @@ const resolvers = {
       return company;
     },
 
-    addMessage: async (parent, { roomName, username, text, timeStamp }, context) => {
+    addMessage: async (parent, { roomId, username, text, timeStamp }, context) => {
       const newMessage = await Message.create({ username, text, timeStamp });
       if (context.user) {
         return Room.findOneAndUpdate(
-          { name: roomName },
-          {
-            $addToSet: { messages: newMessage },
-          },
-          {
-            new: true,
-            runValidators: true,
-          }
+          { _id: roomId },
+          { $push: { messages: newMessage }, },
+          { new: true, runValidators: true, },
         );
       }
 
@@ -81,8 +77,7 @@ const resolvers = {
     getMessages: async (parent, { roomId }, context) => {
       if (context.user) {
         const room = await Room.findOne({ _id: roomId });
-        const messages = room.messages;
-        return messages;
+        return room.messages;
       }
 
       throw AuthenticationError('You must be logged in!')

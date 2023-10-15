@@ -43,9 +43,8 @@ const typeDefs = gql`
 
   type Query {
     user: User
-    company: Company
-    room: Room
-    message: [Message]
+    companies(name: String, code: String): Company
+    rooms(name: String, messages: [String]): Room
   }
 
   type Mutation {
