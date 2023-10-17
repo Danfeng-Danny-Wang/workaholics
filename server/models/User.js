@@ -1,7 +1,6 @@
 const mongoose = require('mongoose');
 const { Schema } = mongoose;
 const bcrypt = require('bcrypt');
-const Company = require('./Company');
 
 const userSchema = new Schema(
   {
@@ -18,6 +17,7 @@ const userSchema = new Schema(
     username: {
       type: String,
       required: true,
+      unique: true,
       trim: true,
     },
     email: {
@@ -30,7 +30,10 @@ const userSchema = new Schema(
       required: true,
       minlength: 5,
     },
-    company: Company.schema
+    company: {
+      type: String,
+      required: true,
+    }
   },
   {
     toJSON: {
@@ -49,7 +52,7 @@ userSchema.pre('save', async function (next) {
 });
 
 userSchema.methods.isCorrectPassword = async function (password) {
-  await bcrypt.compare(password, this.password);
+  return await bcrypt.compare(password, this.password);
 };
 
 const User = mongoose.model('User', userSchema);

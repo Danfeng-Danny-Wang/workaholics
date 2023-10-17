@@ -5,6 +5,7 @@ const { Schema } = mongoose;
 const companySchema = new Schema({
   name: {
     type: String,
+    unique: true,
     required: true,
     trim: true,
   },
@@ -18,8 +19,8 @@ const companySchema = new Schema({
   }]
 });
 
-companySchema.methods.isCorrectPassword = async function(code) {
-  return await compare(code, this.code);
+companySchema.methods.isCorrectCode = async function(code) {
+  return code === this.code;
 };
 
 const Company = mongoose.model('Company', companySchema);
