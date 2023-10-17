@@ -11,21 +11,22 @@ import Select from "@mui/material/Select";
 import { Box } from "@mui/system";
 import LinkButton from "../LinkButton/LinkButton";
 import { useState } from "react";
-// import { useMutation } from '@apollo/client';
-// import Auth from '../utils/auth';
-// import { ADD_USER } from "../../utils/mutations";
+import { useMutation } from '@apollo/client';
+import Auth from '../../utils/auth';
+import { ADD_USER } from "../../utils/mutations";
 // import { GET_COMPANIES } from '../../utils/queries';
 
 function SignupForm() {
-  // const [addUser] = useMutation(ADD_USER);
+  const [addUser] = useMutation(ADD_USER);
+  const [company, setCompany] = useState();
   const [formState, setFormState] = useState(
     {
+      companyCode: '',
       firstName: '',
       lastName: '',
       username: '',
       email: '',
-      password: '',
-      companyCode: ''
+      password: ''
     }
   );
 
@@ -38,19 +39,18 @@ function SignupForm() {
     //  throw error
     // }
 
-    // TODO: add user
-    // const response = await ADD_USER({
-    //   variables: {
-    //     firstName: formState.firstName,
-    //     lastName: formState.lastName,
-    //     username: formState.username,
-    //     email: formState.email,
-    //     password: formState.password,
-    //     // TODO: place chosen company variable here
-    //   },
-    // });
-    // const token = response.data.addUser.token;
-    // Auth.login(token);
+    const response = await addUser({
+      variables: {
+        firstName: formState.firstName,
+        lastName: formState.lastName,
+        username: formState.username,
+        email: formState.email,
+        password: formState.password,
+        company: 'Company1',
+      },
+    });
+    const token = response.data.addUser.token;
+    Auth.login(token);
   };
 
   const handleChange = (event) => {
@@ -60,6 +60,13 @@ function SignupForm() {
       [name]: value,
     });
   };
+
+  const menuClicked = (event, value) => {
+    this.setState({
+      selectedItem: value
+    })
+    console.log(this.state.selectedItem)
+  }
 
   return (
     <form onSubmit={handleFormSubmit}>
@@ -76,17 +83,17 @@ function SignupForm() {
         <Typography variant="h5" marginBottom={1}>
           Sign Up
         </Typography>
-{/* TODO: get the company option functoining to add company variable to adduser */}
+
         <FormControl fullWidth>
           <InputLabel id="company-options">Select Company</InputLabel>
-          <Select
+          <Select value= { this.state.selectedItem } onChange={ menuClicked }
             labelId="company-options-label"
             id="company-option"
             name='company'
             label="Select Company"
             size="medium"
             variant="outlined"
-            // onChange={handleChange}
+            // onChange={handleMenuChange}
           >
             {/* TODO: get companies from DB and map them out here */}
             <MenuItem value={"Company 1"}>Company 1</MenuItem>

@@ -1,12 +1,12 @@
 import { Box, Typography, FormControl, TextField, Button } from "@mui/material";
 import LinkButton from "../LinkButton/LinkButton";
 import { useState } from "react";
-// import { useMutation } from '@apollo/client';
-// import Auth from '../utils/auth';
-// import { LOGIN_USER } from '../../utils/mutations';
+import { useMutation } from '@apollo/client';
+import Auth from '../../utils/auth';
+import { LOGIN_USER } from '../../utils/mutations';
 
 function LoginForm() {
-  // const [login, { error }] = useMutation(LOGIN);
+  const [loginUser] = useMutation(LOGIN_USER);
   const [formState, setFormState] = useState(
     {
       username: '',
@@ -16,16 +16,15 @@ function LoginForm() {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(formState);
-    // try {
-    //   const response = await login({
-    //     variables: { email: formState.email, password: formState.password },
-    //   });
-    //   const token = response.data.login.token;
-    //   Auth.login(token);
-    // } catch (err) {
-    //   console.log(err);
-    // }
+    try {
+      const response = await loginUser({
+        variables: { username: formState.username, password: formState.password },
+      });
+      const token = response.data.loginUser.token;
+      Auth.login(token);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   const handleChange = (event) => {
