@@ -8,7 +8,7 @@ const typeDefs = gql`
     username: String
     email: String
     password: String
-    company: Company
+    company: String
   }
 
   type Message {
@@ -43,12 +43,11 @@ const typeDefs = gql`
 
   type Query {
     user: User
-    companies(name: String, code: String): Company
-    rooms(name: String, messages: [String]): Room
+    companies(name: String): [Company]
   }
 
   type Mutation {
-    loginUser(email: String!, password: String!): Auth
+    loginUser(username: String!, password: String!): Auth
     addUser(firstName: String!, lastName: String!, username: String!, email: String!, password: String!, company: String!): Auth
     verifyCompanyCode(name: String!, code: String!): Company
     addMessage(messageData: MessageInput!): Room

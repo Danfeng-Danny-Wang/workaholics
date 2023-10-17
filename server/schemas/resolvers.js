@@ -7,20 +7,15 @@ const resolvers = {
       if (context.user) {
         return User.findOne({ _id: context.user._id });
       }
-      throw AuthenticationError('You need to be logged in!');
+      throw AuthenticationError;
     },
 
-    companies: async (parent, args ) => {
-      return await Company.find();
-    },
-
-    rooms: async (parent, args, context) => {
+    companies: async (parent, args, context) => {
       if (context.user) {
-        const company = await Company.findOne({ name: context.user.company });
-        const rooms = company.chatRooms;
-        return rooms;
+        return await Company.find({ name: context.user.company }).populate({populate: 'chatRooms'});
+      } else {
+        return await Company.find();
       }
-      throw AuthenticationError('You need to be logged in!');
     },
 
   },
@@ -30,13 +25,12 @@ const resolvers = {
       const user = await User.findOne({ username });
 
       if (!user) {
-        throw AuthenticationError('Username or password is incorrect');
+        throw AuthenticationError;
       }
-
       const correctPw = await user.isCorrectPassword(password);
 
       if (!correctPw) {
-        throw AuthenticationError('Username or password is incorrect');
+        throw AuthenticationError;
       }
 
       const token = signToken(user);
@@ -52,8 +46,7 @@ const resolvers = {
 
     verifyCompanyCode: async (parent, { name, code }) => {
       const company = await Company.findOne({ name });
-      const correctCode = await company.isCorrectPassword(code);
-
+      const correctCode = await company.isCorrectCode(code);
       if (!correctCode) {
         throw new Error('Company and code do not match'); 
       }
@@ -71,7 +64,7 @@ const resolvers = {
         );
       }
 
-      throw AuthenticationError('You must be logged in!')
+      throw AuthenticationError;
     },
 
     getMessages: async (parent, { roomId }, context) => {
@@ -80,7 +73,7 @@ const resolvers = {
         return room.messages;
       }
 
-      throw AuthenticationError('You must be logged in!')
+      throw AuthenticationError;
     },
   },
 };
