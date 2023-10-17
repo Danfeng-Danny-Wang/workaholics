@@ -26,7 +26,7 @@ db.once('open', async () => {
       code: 'joker', 
       chatRooms: [rooms[0]._id, rooms[1]._id, rooms[2]._id] 
     },
-    { name: 'Compnay2', 
+    { name: 'Company2', 
       code: 'batman', 
       chatRooms: [rooms[3]._id, rooms[4]._id, rooms[5]._id] 
     },
