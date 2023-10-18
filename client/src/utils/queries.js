@@ -1,23 +1,20 @@
 import { gql } from '@apollo/client';
 
 export const QUERY_USER = gql`
-
-`;
-
-export const QUERY_COMPANIES = gql`
-query companies {
-  companies {
-    name
-    chatRooms
+query User {
+  user {
+    username
   }
 }
 `;
 
-export const QUERY_COMPANY_ROOMS = gql`
-query companies {
+export const QUERY_COMPANIES = gql`
+query Companies {
   companies {
     name
-    rooms
+    chatRooms {
+      name
+    }
   }
 }
 `;

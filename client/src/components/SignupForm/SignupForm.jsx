@@ -10,15 +10,25 @@ import {
 import Select from "@mui/material/Select";
 import { Box } from "@mui/system";
 import LinkButton from "../LinkButton/LinkButton";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useMutation } from '@apollo/client';
 import Auth from '../../utils/auth';
 import { ADD_USER } from "../../utils/mutations";
-// import { GET_COMPANIES } from '../../utils/queries';
+// import { QUERY_COMPANIES } from '../../utils/queries';
 
 function SignupForm() {
   const [addUser] = useMutation(ADD_USER);
   const [companyState, setCompanyState] = useState();
+  // const [companyData, setCompanyData] = useState();
+  // const { loading, data } = useQuery(QUERY_COMPANIES);
+
+  // useEffect(() => {
+  //     setCompanyData(data);
+  // }, [data]);
+
+  // console.log(`from query ${data}`);
+  // console.log(`useEffect ${companyData}`);
+
   const [formState, setFormState] = useState(
     {
       companyCode: '',
@@ -64,7 +74,7 @@ function SignupForm() {
   const handleMenuChange = (event) => {
     event.preventDefault();
     setCompanyState(event.target.value);
-    console.log(companyState);
+    console.log(`from click ${companyState}`);
   }
 
   return (
@@ -84,16 +94,17 @@ function SignupForm() {
         </Typography>
 
         <FormControl fullWidth>
-          <InputLabel id="company-options">Select Company</InputLabel>
+        <InputLabel id="company-options">Select Company</InputLabel>
           <Select 
             labelId="company-options-label"
             id="company-option"
             label="Select Company"
             size="medium"
             variant="outlined"
-            onChange={handleMenuChange}
-          >
-            {/* TODO: get companies from DB and map them out here */}
+            onChange={handleMenuChange}>
+            {/* {companyData !== null ? companyData.companies.map((company) => {
+              <MenuItem value={company.name}>{company.name}</MenuItem>
+            }) : null} */}
             <MenuItem value={"Company1"}>Company 1</MenuItem>
             <MenuItem value={"Company2"}>Company 2</MenuItem>
             <MenuItem value={"Company3"}>Company 3</MenuItem>

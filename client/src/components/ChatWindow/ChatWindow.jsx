@@ -9,21 +9,26 @@ import {
 } from "@mui/material";
 import { Box } from "@mui/system";
 import SendIcon from "@mui/icons-material/Send";
-import { useState } from "react";
 import { chatMessageDto } from "../../model/ChatMessageDto";
 import ChatWindowHeader from "./ChatWindowHeader";
-
+import { useState, useEffect } from 'react';
+import { useQuery } from '@apollo/client';
+import { QUERY_USER } from '../../utils/queries'
 
 function ChatWindow() {
   const [chatMessages, setChatMessages] = useState([]);
-  //won't need useState for user once connected to db and server
-  const [user, setUser] = useState("");
   const [message, setMessage] = useState("");
   let timeStamp = "";
+  const [userData, setUserData] = useState({});
+  const { loading, data } = useQuery(QUERY_USER);
 
-  const handleUserChange = (event) => {
-    setUser(event.target.value);
-  };
+  useEffect(() => {
+    if (data?.user) {
+      setUserData(data.user);
+    }
+  }, [data]);
+
+  const un = userData.username;
 
   const handleMessageChange = (event) => {
     setMessage(event.target.value);
@@ -34,14 +39,13 @@ function ChatWindow() {
   };
 
   const sendMessage = (event) => {
+    console.log('Enter');
     event.preventDefault();
-    if (user && message) {
+    if (message) {
       handleTimeStamp();
-      console.log("Send!");
-      console.log(timeStamp);
       setChatMessages([
         ...chatMessages,
-        new chatMessageDto(user, message, timeStamp),
+        new chatMessageDto(userData.username, message, timeStamp),
       ]);
       setMessage("");
     }
@@ -54,27 +58,15 @@ function ChatWindow() {
       />
     </ListItem>
   ));
+
   return (
     <form onSubmit={sendMessage}>
       <Box p={3}>
         <Grid container spacing={1} alignItems="center">
-          <ChatWindowHeader user={user} />
+          <ChatWindowHeader user={un} />
 
-          {/* TODO: break this down to list each user, message, date with xs=2 xs=8 xs=2 */}
           <Grid id="chat-window" xs={12} item>
             <List id="chat-window-messages">{listChatMessages}</List>
-          </Grid>
-          {/* TODO: 3 grids with one element each, end the mapping here */}
-          <Grid xs={0} item>
-            <FormControl fullWidth>
-              <TextField
-                onChange={handleUserChange}
-                value={user}
-                label="Username"
-                variant="outlined"
-                fontSize=".5em"
-              />
-            </FormControl>
           </Grid>
           <Grid xs={10} item>
             <FormControl fullWidth>
