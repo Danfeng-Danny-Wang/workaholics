@@ -18,7 +18,7 @@ import { ADD_USER } from "../../utils/mutations";
 
 function SignupForm() {
   const [addUser] = useMutation(ADD_USER);
-  const [company, setCompany] = useState();
+  const [companyState, setCompanyState] = useState();
   const [formState, setFormState] = useState(
     {
       companyCode: '',
@@ -46,7 +46,7 @@ function SignupForm() {
         username: formState.username,
         email: formState.email,
         password: formState.password,
-        company: 'Company1',
+        company: companyState,
       },
     });
     const token = response.data.addUser.token;
@@ -61,11 +61,10 @@ function SignupForm() {
     });
   };
 
-  const menuClicked = (event, value) => {
-    this.setState({
-      selectedItem: value
-    })
-    console.log(this.state.selectedItem)
+  const handleMenuChange = (event) => {
+    event.preventDefault();
+    setCompanyState(event.target.value);
+    console.log(companyState);
   }
 
   return (
@@ -86,19 +85,18 @@ function SignupForm() {
 
         <FormControl fullWidth>
           <InputLabel id="company-options">Select Company</InputLabel>
-          <Select value= { this.state.selectedItem } onChange={ menuClicked }
+          <Select 
             labelId="company-options-label"
             id="company-option"
-            name='company'
             label="Select Company"
             size="medium"
             variant="outlined"
-            // onChange={handleMenuChange}
+            onChange={handleMenuChange}
           >
             {/* TODO: get companies from DB and map them out here */}
-            <MenuItem value={"Company 1"}>Company 1</MenuItem>
-            <MenuItem value={"Company 2"}>Company 2</MenuItem>
-            <MenuItem value={"Company 3"}>Company 3</MenuItem>
+            <MenuItem value={"Company1"}>Company 1</MenuItem>
+            <MenuItem value={"Company2"}>Company 2</MenuItem>
+            <MenuItem value={"Company3"}>Company 3</MenuItem>
           </Select>
         </FormControl>
 
