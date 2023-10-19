@@ -5,7 +5,7 @@ Workaholics is designed to be a company specific chat messenger that would allow
 
 ## Demo
 
-Insert gif or link to demo
+https://workaholics-chat123-7583c92cc0c9.herokuapp.com/ChatBox
 
 
 ## Deployment
