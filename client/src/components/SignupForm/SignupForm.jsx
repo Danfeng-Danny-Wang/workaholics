@@ -274,7 +274,7 @@ function SignupForm() {
         <LinkButton
           url="/"
           sx={{ marginTop: 1, borderRadius: 2 }}
-          variant="outlined"
+          variant="contained"
           color="primary"
         >
           Go to Login

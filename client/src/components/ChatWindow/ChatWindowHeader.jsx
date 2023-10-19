@@ -11,7 +11,7 @@ function ChatWindowHeader() {
         <Typography variant="h6">Chatroom</Typography>
       </Grid>
       <Grid id="chat-header" xs={1} item>
-        <LinkButton url="/Lobby" variant="outlined" color="secondary">
+        <LinkButton url="/Lobby" variant="contained" color="secondary">
           Lobby
         </LinkButton>
       </Grid>
