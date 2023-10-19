@@ -1,4 +1,5 @@
 import {
+  // Alert,
   Button,
   Divider,
   FormControl,
@@ -13,21 +14,37 @@ import LinkButton from "../LinkButton/LinkButton";
 import { useState, useEffect } from "react";
 import { useMutation } from '@apollo/client';
 import Auth from '../../utils/auth';
-import { ADD_USER } from "../../utils/mutations";
+import { ADD_USER, VERIFY_CONPANY_CODE } from "../../utils/mutations";
+import { Form } from "react-router-dom";
 // import { QUERY_COMPANIES } from '../../utils/queries';
 
 function SignupForm() {
   const [addUser] = useMutation(ADD_USER);
+  const [verifyCode] = useMutation(VERIFY_CONPANY_CODE);
   const [companyState, setCompanyState] = useState();
+
+  // const textFields = [
+  //   { name: 'firstName', type: 'text', label: 'First Name',},
+  //   { name: 'lastName', type: 'text', label: 'Last Name',},
+  //   { name: 'username', type: 'text', label: 'Username',},
+  //   { name: 'email', type: 'email', label: 'Email',},
+  //   { name: 'password', type: 'password', label: 'Password',},
+  // ];
+
+  // const [validated] = useState(false);
+  // const [showAlert, setShowAlert] = useState(false);
+
   // const [companyData, setCompanyData] = useState();
   // const { loading, data } = useQuery(QUERY_COMPANIES);
 
-  // useEffect(() => {
+  // useEffect(  () => {
+  //   if (!loading) {
   //     setCompanyData(data);
-  // }, [data]);
+  //   }
+  // }, [data, loading]);
 
-  // console.log(`from query ${data}`);
-  // console.log(`useEffect ${companyData}`);
+  // console.log(`from query ${data}`);//data is undefined
+  // console.log(`useEffect ${companyData}`);//companyData is undefined
 
   const [formState, setFormState] = useState(
     {
@@ -42,25 +59,48 @@ function SignupForm() {
 
   const handleFormSubmit = async (event) => {
     event.preventDefault();
-    console.log(formState);
-    // TODO: check company code for verification const userCompany = await getCompany()
-    // set up a separate function or helper to verify company code
-    // if (companyCode !== userCompany.code) {
-    //  throw error
+
+    // const form = event.currentTarget;
+    // if (form.checkValidity() === false) {
+    //   event.preventDefault();
+    //   event.stopPropagation();
     // }
 
-    const response = await addUser({
-      variables: {
-        firstName: formState.firstName,
-        lastName: formState.lastName,
-        username: formState.username,
-        email: formState.email,
-        password: formState.password,
-        company: companyState,
-      },
-    });
-    const token = response.data.addUser.token;
-    Auth.login(token);
+    try {
+      const codeResponse = await verifyCode({
+        variables: {
+          name: companyState,
+          code: formState.companyCode,
+        },
+      });
+      if (!codeResponse.ok) {
+        throw new Error('Company and code do not match!');
+      }
+    } catch (err) {
+      console.error(err);
+      // setShowAlert(true);
+    }
+    
+    try {
+      const userResponse = await addUser({
+        variables: {
+          firstName: formState.firstName,
+          lastName: formState.lastName,
+          username: formState.username,
+          email: formState.email,
+          password: formState.password,
+          company: companyState,
+        },
+      });
+      if (!userResponse.ok) {
+        throw new Error('Company and code do not match!');
+      }
+      const token = userResponse.data.addUser.token;
+      Auth.login(token);
+    } catch (err) {
+      console.error(err);
+      // setShowAlert(true);
+    }
   };
 
   const handleChange = (event) => {
@@ -74,11 +114,24 @@ function SignupForm() {
   const handleMenuChange = (event) => {
     event.preventDefault();
     setCompanyState(event.target.value);
-    console.log(`from click ${companyState}`);
-  }
+  };
+  
+  useEffect(() => {
+  }, [companyState]);
 
   return (
-    <form onSubmit={handleFormSubmit}>
+    <Form onSubmit={handleFormSubmit}>
+  {/* <Form noValidate validated={validated} onSubmit={handleFormSubmit}></Form>
+      <Alert dismissible 
+        onClose={() => setShowAlert(false)} 
+        show={showAlert}
+        size='small'
+        variant='standard'
+        severity="error"
+        margin='dense'>
+          Signup went wrong!
+      </Alert> */}
+
       <Box
         display={"flex"}
         flexDirection={"column"}
@@ -123,6 +176,23 @@ function SignupForm() {
         </FormControl>
 
         <Divider sx={{ m: 1, minWidth: 350 }} />
+
+        {/* {textFields.map((field, index) => (
+          <>
+            <FormControl fullWidth>
+              <TextField
+                key={index}
+                name={field.name}
+                margin="dense"
+                size="small"
+                type={field.type}
+                label={field.label}
+                variant="outlined"
+                onChange={handleChange}
+              />
+            </FormControl>
+          </>
+        ))} */}
 
         <FormControl fullWidth>
           <TextField
@@ -185,7 +255,14 @@ function SignupForm() {
         </FormControl>
 
         <Button
-          // url="/Lobby"
+          disabled={!(
+            companyState &&
+            formState.companyCode &&
+            formState.firstName &&
+            formState.lastName &&
+            formState.username &&
+            formState.email &&
+            formState.password)}
           sx={{ marginTop: 1, borderRadius: 2 }}
           variant="contained"
           color="warning"
@@ -203,7 +280,7 @@ function SignupForm() {
           Go to Login
         </LinkButton>
       </Box>
-    </form>
+    </Form>
   );
 }
 

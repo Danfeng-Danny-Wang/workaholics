@@ -11,7 +11,9 @@ query User {
 export const QUERY_COMPANIES = gql`
 query Companies {
   companies {
+    id
     name
+    code
     chatRooms {
       name
     }
