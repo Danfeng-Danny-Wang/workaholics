@@ -18,6 +18,7 @@ function ChatroomList() {
           variant="contained"
           color={room.color}
           style={{
+            color: "black",
             padding: "10px 100px",
             fontSize: "18px",
           }}
