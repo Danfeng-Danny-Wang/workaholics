@@ -93,7 +93,7 @@ function SignupForm() {
         },
       });
       if (!userResponse.ok) {
-        throw new Error('Company and code do not match!');
+        throw new Error('Add user did not work!');
       }
       const token = userResponse.data.addUser.token;
       Auth.login(token);
@@ -274,7 +274,7 @@ function SignupForm() {
         <LinkButton
           url="/"
           sx={{ marginTop: 1, borderRadius: 2 }}
-          variant="contained"
+          variant="outlined"
           color="primary"
         >
           Go to Login

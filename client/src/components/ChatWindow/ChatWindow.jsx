@@ -28,8 +28,6 @@ function ChatWindow() {
     }
   }, [data]);
 
-  const un = userData.username;
-
   const handleMessageChange = (event) => {
     setMessage(event.target.value);
   };
@@ -39,7 +37,6 @@ function ChatWindow() {
   };
 
   const sendMessage = (event) => {
-    console.log('Enter');
     event.preventDefault();
     if (message) {
       handleTimeStamp();
@@ -52,10 +49,10 @@ function ChatWindow() {
   };
 
   const listChatMessages = chatMessages.map((chatMessageDto, index) => (
-    <ListItem key={index}>
-      <ListItemText
-        primary={`${chatMessageDto.user}: ${chatMessageDto.message}: (${chatMessageDto.timeStamp})`}
-      />
+    <ListItem key={index} dense>
+      <ListItemText >{`${chatMessageDto.user}`}</ListItemText>
+      <ListItemText >{`${chatMessageDto.message}`}</ListItemText>
+      <ListItemText >{`${chatMessageDto.timeStamp}`}</ListItemText>
     </ListItem>
   ));
 
@@ -63,7 +60,7 @@ function ChatWindow() {
     <form onSubmit={sendMessage}>
       <Box p={3}>
         <Grid container spacing={1} alignItems="center">
-          <ChatWindowHeader user={un} />
+          <ChatWindowHeader/>
 
           <Grid id="chat-window" xs={12} item>
             <List id="chat-window-messages">{listChatMessages}</List>
@@ -90,7 +87,7 @@ function ChatWindow() {
               type="submit"
               aria-label="send"
               color="success"
-              variant="contained"
+              variant="outlined"
             >
               <SendIcon />
             </Button>
