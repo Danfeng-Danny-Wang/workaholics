@@ -30,7 +30,7 @@ export default function Header() {
           <Button
             sx={{ marginLeft: 2, borderRadius: 2 }}
             size="small"
-            variant="outlined"
+            variant="contained"
             color="warning"
             onClick={() => Auth.logout()}
             ><strong>Logout</strong>

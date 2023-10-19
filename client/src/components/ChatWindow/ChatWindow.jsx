@@ -50,8 +50,8 @@ function ChatWindow() {
 
   const listChatMessages = chatMessages.map((chatMessageDto, index) => (
     <ListItem key={index} dense>
-      <ListItemText >{`${chatMessageDto.user}`}</ListItemText>
-      <ListItemText >{`${chatMessageDto.message}`}</ListItemText>
+      <ListItemText >{`${chatMessageDto.user}: ${chatMessageDto.message}`}</ListItemText>
+      <ListItemText ></ListItemText>
       <ListItemText >{`${chatMessageDto.timeStamp}`}</ListItemText>
     </ListItem>
   ));
@@ -87,7 +87,7 @@ function ChatWindow() {
               type="submit"
               aria-label="send"
               color="success"
-              variant="outlined"
+              variant="contained"
             >
               <SendIcon />
             </Button>
