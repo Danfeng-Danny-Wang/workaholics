@@ -57,44 +57,49 @@ function ChatWindow() {
   ));
 
   return (
-    <form onSubmit={sendMessage}>
+    <>
       <Box p={3}>
         <Grid container spacing={1} alignItems="center">
           <ChatWindowHeader/>
-
-          <Grid id="chat-window" xs={12} item>
-            <List id="chat-window-messages">{listChatMessages}</List>
-          </Grid>
-          <Grid xs={10} item>
-            <FormControl fullWidth>
-              <TextField
-                onChange={handleMessageChange}
-                value={message}
-                label="Type your message..."
-                variant="outlined"
-              />
-            </FormControl>
-          </Grid>
-          <Grid xs={1} item>
-            <Button
-              sx={{
-                maxWidth: "50px",
-                maxHeight: "50px",
-                minWidth: "50px",
-                minHeight: "50px",
-                borderRadius: "25px",
-              }}
-              type="submit"
-              aria-label="send"
-              color="success"
-              variant="contained"
-            >
-              <SendIcon />
-            </Button>
-          </Grid>
         </Grid>
+          <form onSubmit={sendMessage}>
+          <Grid container spacing={1} alignItems="center">
+            <Grid id="chat-window" xs={12} item>
+              <List id="chat-window-messages">{listChatMessages}</List>
+            </Grid>
+            <Grid xs={10} item>
+              <FormControl fullWidth>
+                <TextField
+                  onChange={handleMessageChange}
+                  value={message}
+                  label="Type your message..."
+                  variant="outlined"
+                />
+              </FormControl>
+            </Grid>
+            <Grid xs={1} item>
+              <Button
+                sx={{
+                  maxWidth: "50px",
+                  maxHeight: "50px",
+                  minWidth: "50px",
+                  minHeight: "50px",
+                  borderRadius: "25px",
+                }}
+                type="submit"
+                aria-label="send"
+                color="success"
+                variant="contained"
+              >
+                <SendIcon />
+              </Button>
+            </Grid>
+          
+        </Grid>
+        </form>
       </Box>
-    </form>
+    
+    </>
   );
 }
 
