@@ -1,5 +1,4 @@
 import {
-  // Alert,
   Button,
   Divider,
   FormControl,
@@ -31,21 +30,6 @@ function SignupForm() {
   //   { name: 'password', type: 'password', label: 'Password',},
   // ];
 
-  // const [validated] = useState(false);
-  // const [showAlert, setShowAlert] = useState(false);
-
-  // const [companyData, setCompanyData] = useState();
-  // const { loading, data } = useQuery(QUERY_COMPANIES);
-
-  // useEffect(  () => {
-  //   if (!loading) {
-  //     setCompanyData(data);
-  //   }
-  // }, [data, loading]);
-
-  // console.log(`from query ${data}`);//data is undefined
-  // console.log(`useEffect ${companyData}`);//companyData is undefined
-
   const [formState, setFormState] = useState(
     {
       companyCode: '',
@@ -60,12 +44,6 @@ function SignupForm() {
   const handleFormSubmit = async (event) => {
     event.preventDefault();
 
-    // const form = event.currentTarget;
-    // if (form.checkValidity() === false) {
-    //   event.preventDefault();
-    //   event.stopPropagation();
-    // }
-
     try {
       const codeResponse = await verifyCode({
         variables: {
@@ -73,12 +51,8 @@ function SignupForm() {
           code: formState.companyCode,
         },
       });
-      if (!codeResponse.ok) {
-        throw new Error('Company and code do not match!');
-      }
     } catch (err) {
       console.error(err);
-      // setShowAlert(true);
     }
     
     try {
@@ -92,14 +66,10 @@ function SignupForm() {
           company: companyState,
         },
       });
-      if (!userResponse.ok) {
-        throw new Error('Add user did not work!');
-      }
       const token = userResponse.data.addUser.token;
       Auth.login(token);
     } catch (err) {
       console.error(err);
-      // setShowAlert(true);
     }
   };
 
@@ -117,20 +87,11 @@ function SignupForm() {
   };
   
   useEffect(() => {
+    console.log(companyState);
   }, [companyState]);
 
   return (
     <Form onSubmit={handleFormSubmit}>
-  {/* <Form noValidate validated={validated} onSubmit={handleFormSubmit}></Form>
-      <Alert dismissible 
-        onClose={() => setShowAlert(false)} 
-        show={showAlert}
-        size='small'
-        variant='standard'
-        severity="error"
-        margin='dense'>
-          Signup went wrong!
-      </Alert> */}
 
       <Box
         display={"flex"}
@@ -153,6 +114,7 @@ function SignupForm() {
             id="company-option"
             label="Select Company"
             size="medium"
+            value=""
             variant="outlined"
             onChange={handleMenuChange}>
             {/* {companyData !== null ? companyData.companies.map((company) => {

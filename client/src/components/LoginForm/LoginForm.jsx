@@ -20,9 +20,6 @@ function LoginForm() {
       const response = await loginUser({
         variables: { username: formState.username, password: formState.password },
       });
-      // if (!response.ok) {
-      //   throw new Error('Login in did not work!');
-      // }
       const token = response.data.loginUser.token;
       Auth.login(token);
     } catch (err) {
