@@ -23,7 +23,7 @@ function ChatroomList() {
             fontSize: "18px",
           }}
         >
-          <strong>{room.name}</strong>
+          {room.name}
         </LinkButton>
       ))}
     </>
