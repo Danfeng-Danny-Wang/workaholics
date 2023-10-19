@@ -20,6 +20,9 @@ function LoginForm() {
       const response = await loginUser({
         variables: { username: formState.username, password: formState.password },
       });
+      // if (!response.ok) {
+      //   throw new Error('Login in did not work!');
+      // }
       const token = response.data.loginUser.token;
       Auth.login(token);
     } catch (err) {
@@ -72,7 +75,9 @@ function LoginForm() {
         </FormControl>
 
         <Button
-          // url="/Lobby"
+          disabled={!(
+            formState.username &&
+            formState.password)}
           sx={{ marginTop: 2, borderRadius: 2 }}
           variant="contained"
           color="warning"
@@ -84,7 +89,7 @@ function LoginForm() {
         <LinkButton
           url="/Signup"
           sx={{ marginTop: 2, borderRadius: 2 }}
-          variant="contained"
+          variant="outlined"
           color="primary"
         >
           Go to Signup
