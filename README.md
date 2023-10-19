@@ -41,7 +41,7 @@ After login you can enter any of the designated chat room and send messages
 
 - [@esbev](https://github.com/esbev)
 - [@danfeng](https://github.com/Danfeng-Danny-Wang)
-- []()
+- [@Fuzzy-Codes](https://github.com/Fuzzy-Codes)
 - [@RodolfoSL]()
 
 ## License
